@@ -1,0 +1,127 @@
+/* Fondo de video */
+.videof {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -2;
+}
+
+.capa {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    opacity: 0.5;
+    mix-blend-mode: overlay;
+    z-index: -1;
+}
+
+/* Contenido */
+main {
+    width: 90%;
+    max-width: 800px;
+    margin: auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 2;
+    position: relative;
+}
+
+.contenido {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin: auto;
+    position: relative;
+    z-index: 2;
+    font-family: fuente1;
+}
+
+@font-face {
+    font-family: fuente1;
+    src: url(Coiny/Coiny-Regular.ttf);
+}
+
+/* Imagen si se usa */
+.imagen {
+    width: 35%;
+    height: 100%;
+}
+
+.contenidoLogo {
+    display: unset;
+    flex-direction: column;
+    margin: auto;
+    position: relative;
+    z-index: 2;
+}
+
+.logotipo {
+    padding: 10px;
+    border: 5px solid black;
+    color: white;
+    border-radius: 30px 15px;
+    text-decoration: none;
+    box-shadow: 10px 10px 30px rgb(0, 64, 255);
+    text-align: center;
+}
+
+.subtitulo {
+    text-align: center;
+    color: white;
+    background-color: black;
+    padding: 1px;
+    border-radius: 30px ;
+    transition: 0.8s ease all;
+    font-size: 30px;
+    font-family: fuente1;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.logotipo:hover .subtitulo {
+    background-color: rgb(0, 64, 255);
+}
+
+/* Texto animado */
+.texto-animado {
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    font-family: fuente1;
+    flex-wrap: wrap;
+}
+
+.texto-animado > div {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: .5s ease all;
+    font-family: fuente1;
+}
+
+.texto-animado > div.animacion {
+    transform: translateY(-130px);
+}
+
+.texto-animado > div span {
+    font-size: 55px;
+    font-weight: normal;
+    line-height: 60px;
+}
+
+.Segundo1 {
+    position: absolute;
+    top: 130px;
+}
+

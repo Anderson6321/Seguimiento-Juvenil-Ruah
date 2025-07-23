@@ -1,0 +1,84 @@
+/* Reset y centrar flex */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000; /* opcional: color de fondo */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Partículas a pantalla completa detrás */
+#particles-js {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+/* Contenedor principal */
+.contenedor {
+  max-width: 600px;
+  width: 90%;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 20px;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+  text-align: center;
+  font-family: fuente1;
+  z-index: 1;
+}
+
+/* Imagen del personaje */
+.personaje {
+  width: 50%;
+  margin-bottom: 1%;
+  filter: drop-shadow(3px 3px 12px rgb(196, 196, 196));
+}
+
+/* Diálogo */
+@font-face {
+  font-family: fuente1;
+  src: url(Coiny/Coiny-Regular.ttf);
+}
+@font-face {
+  font-family: fuente2;
+  src: url(Anton-Regular.ttf);
+}
+.dialogo {
+  margin-bottom: 30px;
+  font-size: 25px;
+  line-height: 1.6;
+  padding: 1%;
+  background: rgba(212, 209, 209, 0.77);
+  border-radius: 15px;
+  font-family: fuente1;
+}
+
+/* Inputs y botones */
+input, button {
+  padding: 10px;
+  margin: 5px;
+  border: none;
+  border-radius: 25px;
+  font-size: 19px;
+  font-family: fuente1;
+}
+input {
+  width: 80%;
+}
+button {
+  background-color: #f1c40f;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+button:hover {
+  background-color: #d4ac0d;
+}

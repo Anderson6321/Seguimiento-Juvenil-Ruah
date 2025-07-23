@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Respuestas</title>
+    <style>
+      table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+      th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+    </style>
+</head>
+<body>
+    <h1>Respuestas de los usuarios</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre Real</th>
+                <th>Nombre Amistoso</th>
+                <th>Cita Favorita</th>
+                <th>Motivo Cita</th>
+                <th>Color Favorito</th>
+                <th>Alabanza</th>
+                <th>Milagro</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in respuestas %}
+            <tr>
+                <td>{{ r[1] }}</td>
+                <td>{{ r[2] }}</td>
+                <td>{{ r[3] }}</td>
+                <td>{{ r[4] }}</td>
+                <td>{{ r[5] }}</td>
+                <td>{{ r[6] }}</td>
+                <td>{{ r[7] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
