@@ -1,46 +1,56 @@
 from flask import Flask, request, render_template, jsonify
-import sqlite3
+import os
+import psycopg2
 
 app = Flask(__name__)
+DB_URL = os.environ['DATABASE_URL']
 
-# Crear base de datos y tabla si no existen
+def get_connection():
+    return psycopg2.connect(DB_URL)
+
+# Crear tabla en Supabase si no existe
 def init_db():
-    conn = sqlite3.connect('base_datos.db')
-    c = conn.cursor()
-    c.execute('''CREATE TABLE IF NOT EXISTS respuestas (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nombreReal TEXT,
-        nombreAmistoso TEXT,
-        citaFavorita TEXT,
-        motivoCita TEXT,
-        colorFavorito TEXT,
-        alabanzaFavorita TEXT,
-        milagroFavorito TEXT
-    )''')
-    conn.commit()
-    conn.close()
+    try:
+        conn = get_connection()
+        cur = conn.cursor()
+        cur.execute('''
+            CREATE TABLE IF NOT EXISTS respuestas (
+                id SERIAL PRIMARY KEY,
+                nombreReal TEXT,
+                nombreAmistoso TEXT,
+                citaFavorita TEXT,
+                motivoCita TEXT,
+                colorFavorito TEXT,
+                alabanzaFavorita TEXT,
+                milagroFavorito TEXT,
+                fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+        conn.commit()
+        cur.close()
+        conn.close()
+    except Exception as e:
+        print("Error al inicializar la base de datos:", e)
 
 init_db()
 
 @app.route('/')
+@app.route('/index.html')
 def index():
     return render_template('index.html')
-
-@app.route('/index.html')
-def index_html():
-    return render_template('index.html')
-
 
 @app.route('/submit', methods=['POST'])
 def submit():
     data = request.get_json()
     try:
-        conn = sqlite3.connect('base_datos.db')
-        c = conn.cursor()
-        c.execute('''INSERT INTO respuestas (
-            nombreReal, nombreAmistoso, citaFavorita, motivoCita,
-            colorFavorito, alabanzaFavorita, milagroFavorito
-        ) VALUES (?, ?, ?, ?, ?, ?, ?)''', (
+        conn = get_connection()
+        cur = conn.cursor()
+        cur.execute('''
+            INSERT INTO respuestas (
+                nombreReal, nombreAmistoso, citaFavorita, motivoCita,
+                colorFavorito, alabanzaFavorita, milagroFavorito
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s)
+        ''', (
             data['nombreReal'],
             data['nombreAmistoso'],
             data['citaFavorita'],
@@ -50,6 +60,7 @@ def submit():
             data['milagroFavorito']
         ))
         conn.commit()
+        cur.close()
         conn.close()
         return jsonify({'success': True})
     except Exception as e:
@@ -57,14 +68,16 @@ def submit():
 
 @app.route('/respuestas')
 def ver_respuestas():
-    conn = sqlite3.connect('base_datos.db')
-    c = conn.cursor()
-    c.execute('SELECT * FROM respuestas')
-    datos = c.fetchall()
-    conn.close()
-    return render_template('respuestas.html', respuestas=datos)
+    try:
+        conn = get_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM respuestas ORDER BY fecha DESC')
+        datos = cur.fetchall()
+        cur.close()
+        conn.close()
+        return render_template('respuestas.html', respuestas=datos)
+    except Exception as e:
+        return f"Error al obtener respuestas: {e}"
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
